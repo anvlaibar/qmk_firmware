@@ -16,4 +16,8 @@
 
 #pragma once
 
+#define LEADER_PER_KEY_TIMING
+
+#define LEADER_TIMEOUT 250
+
 // place overrides here
