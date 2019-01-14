@@ -16,6 +16,8 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_norwegian.h"
+#include "quantum.h"
+#include "send_string_keycodes.h"
 #include "eeconfig.h"
 
 // Aliases
@@ -29,7 +31,8 @@
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  QUERTY = SAFE_RANGE,
+  QMK = SAFE_RANGE,
+  QUERTY,
   LOWER,
   RAISE,
   FUNCTION,
@@ -102,12 +105,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 };
 
-void persistant_default_layer_set(uint16_t default_layer) {
-  eeconfig_update_default_layer(default_layer);
-  default_layer_set(default_layer);
-}
-
-
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
@@ -125,9 +122,13 @@ void matrix_scan_user(void) {
     }
     SEQ_TWO_KEYS(KC_5, KC_5) {
       // Hard refresh in browser. CTRL + F5
-      SEND_STRING(SS_LCTRL(X_F5));
-    }
+      //SEND_STRING(SS_LCTRL(X_F5));
+      register_code(KC_LCTL);
+      register_code(KC_F5);
 
+      unregister_code(KC_LCTL);
+      unregister_code(KC_F5);
+    }
     SEQ_TWO_KEYS(KC_V, KC_V) {
       // Linux paste. CTRL + SHIFT + V
       SEND_STRING(SS_LCTRL(SS_LSFT("v")));
@@ -136,43 +137,26 @@ void matrix_scan_user(void) {
   }
 }
 
-
-/* Detect layer change and change light */
-uint32_t layer_state_set_user(uint32_t state) {
-    switch (biton32(state)) {
-    case RAISE:
-        rgblight_setrgb (0x00,  0x00, 0xFF);
-        break;
-    case LOWER:
-        rgblight_setrgb (0xFF,  0x00, 0x00);
-        break;
-        rgblight_setrgb (0x00,  0xFF, 0x00);
-        break;
-    case RGB:
-        rgblight_setrgb (0x7A,  0x00, 0xFF);
-        break;
-    default: //  for any other layers, or the default layer
-        rgblight_setrgb (0x00,  0xFF, 0xFF);
-        break;
-    }
-  return state;
+void persistant_default_layer_set(uint16_t default_layer) {
+  eeconfig_update_default_layer(default_layer);
+  default_layer_set(default_layer);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case QWERTY:
+    case _QW:
       if (record->event.pressed) {
         persistant_default_layer_set(1UL<<_QW);
       }
       return false;
       break;
-    case FUNCTION:
+    case _FN:
       if (record->event.pressed) {
         persistant_default_layer_set(1UL<<_FN);
       }
       return false;
       break;
-    case RGB:
+    case _RGB:
       if (record->event.pressed) {
         persistant_default_layer_set(1UL<<_RGB);
       }
@@ -182,25 +166,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       case LOWER:
         if (record->event.pressed) {
           layer_on(_RGB);
-          update_tri_layer(_FN, _RGB);
+          update_tri_layer(_QW, _FN, _RGB);
         } else {
           layer_off(_RGB);
-          update_tri_layer(_FN, _RGB);
+          update_tri_layer(_QW, _FN, _RGB);
         }
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_FN);
-        update_tri_layer(_FN, _RGB);
+        update_tri_layer(_QW, _FN, _RGB);
       } else {
         layer_off(_FN);
-        update_tri_layer(_FN, _RGB);
+        update_tri_layer(_QW, _FN, _RGB);
       }
       return false;
       break;
      }
   return true;
 }
+
+/* Detect layer change and change light */
+uint32_t layer_state_set_user(uint32_t state) {
+  switch (biton32(state)) {
+    case _FN:
+        rgblight_setrgb (0x00,  0x00, 0xFF);
+        break;
+    case _RGB:
+        rgblight_setrgb (0xFF,  0x00, 0x00);
+        break;
+    default: //  for any other layers, or the default layer
+        rgblight_setrgb (0x00,  0xFF, 0xFF);
+        break;
+    }
+  return state;
+}
+
 
 
