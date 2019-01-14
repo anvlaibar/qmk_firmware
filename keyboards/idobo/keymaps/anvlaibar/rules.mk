@@ -1,5 +1,6 @@
 KEY_LOCK_ENABLE = yes
 LEADER_ENABLE = yes
+TAP_DANCE_ENABLE = yes
 
 # Overrides
 MOUSEKEY_ENABLE = no       # Mouse keys(+4700)

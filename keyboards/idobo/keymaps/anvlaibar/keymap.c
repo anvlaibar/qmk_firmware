@@ -36,7 +36,38 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   FUNCTION,
-  RGB
+  RGB,
+  MACRO
+};
+
+//Tap Dance Declarations
+enum {
+  TD_ESC = 0
+};
+void esc_finished (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_LCTL);
+    register_code (KC_LALT);
+    register_code (KC_ESC);
+  } else {
+    register_code (KC_ESC);
+  }
+}
+void esc_reset (qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_LCTL);
+    register_code (KC_LALT);
+    register_code (KC_ESC);
+  } else {
+    unregister_code (KC_ESC);
+  }
+}
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for Esc, twice for CTRL + SHIFT + ESC (Task manager)
+  [TD_ESC]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, esc_finished, esc_reset)
+// Other declarations would go here, separated by commas, if you have them
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -51,15 +82,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
   * | SHIFT | <     | Z     | X     | C     | V     | B     | N     | M     | ,     | .     | -     | ;     | UP    | DEL   |
   * |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+--- ---+-------+-------+-------|
-  * | CTRL  | GUI   | %     | /     | ALT   | LOWER | SPACE | SPACE | RAISE | ALTGR | FN    | &     | LEFT  | DOWN  | RIGHT |
+  * | CTRL  | GUI   | HYPER | /     | ALT   | LOWER | SPACE | SPACE | RAISE | ALTGR | FN    | &     | LEFT  | DOWN  | RIGHT |
   * '-----------------------------------------------------------------------------------------------------------------------'
   */
  [_QW] = LAYOUT_ortho_5x15( \
-    KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS, NO_BSLS, KC_TILD, KC_BSPC, \
+    TD_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS, NO_BSLS, KC_TILD, KC_BSPC, \
     KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA, NO_QUOT, KC_LBRC, KC_RBRC, \
-    NO_PIPE, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE, NO_ASTR, KC_LSPO, KC_ENT, \
-    KC_LSFT, NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_MINS, KC_SCOLON, KC_UP, KC_DEL, \
-    KC_LCTL, KC_LGUI, KC_PERC, KC_PSLS, KC_LALT, LOWER, KC_SPC, XXX, RAISE, KC_RALT, LT(1, KC_RSFT), KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT \
+    NO_PIPE, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE, NO_ASTR, KC_RSPC, KC_ENT, \
+    KC_LSPO, NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_MINS, KC_SCOLON, KC_UP, KC_DEL, \
+    KC_LCTL, KC_LGUI, HYPR_T(KC_H), KC_PSLS, KC_LALT, LOWER, KC_SPC, XXX, RAISE, KC_RALT, MO(1), KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT \
   ),
 
  /* Function & Media keys - LAYER 1
@@ -68,19 +99,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | LEADR | PLAYPS| STOP  | PREV  | NEXT  | VLMMUT| VLM-  | VLM+  | -     | PRTSCR| SCRLK | PAUSE | INS   | -     | CALC  |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | KEYLK | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |  -    | -     | -     |
+	* | KEYLK | -     | -     | -     | -     | -     | MOD   | -     | -     | -     | -     | -     |  -    | -     | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | PGUP  | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | RESET | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | RGB   | -     | -     | HOME  | PG DN | END   |
+	* | RESET | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | RGB   | FN    | -     | HOME  | PG DN | END   |
 	* '-----------------------------------------------------------------------------------------------------------------------'
 	*/
  	[_FN] = LAYOUT_ortho_5x15(
   	___, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_F13, XXX, \
   	KC_LEAD, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
-  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
+  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, MACRO, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
   	XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, XXX, \
-  	RESET, XXX, XXX, XXX, QUERTY, LOWER, XXX, XXX, RAISE, RGB, XXX, XXX, KC_HOME, KC_PGDN, KC_END \
+  	RESET, XXX, XXX, XXX, QUERTY, LOWER, XXX, XXX, RAISE, RGB, MO(2), XXX, KC_HOME, KC_PGDN, KC_END \
 	),
 
  /* RGB-controls - LAYER 2
@@ -120,14 +151,20 @@ void matrix_scan_user(void) {
       // Export for web in photoshop: LALT + SHIFT + CTRL + W
       SEND_STRING(SS_LALT(SS_LSFT(SS_LCTRL("w"))));
     }
+    SEQ_ONE_KEY(KC_R) {
+      // Open cmd
+      SEND_STRING(SS_LGUI("r"));
+      _delay_ms(500);
+      SEND_STRING("cmd" SS_TAP(X_ENTER));
+    }
     SEQ_TWO_KEYS(KC_5, KC_5) {
       // Hard refresh in browser. CTRL + F5
-      //SEND_STRING(SS_LCTRL(X_F5));
-      register_code(KC_LCTL);
-      register_code(KC_F5);
+      SEND_STRING(SS_LCTRL(SS_TAP(X_F5)));
+      //register_code(KC_LCTL);
+      //register_code(KC_F5);
 
-      unregister_code(KC_LCTL);
-      unregister_code(KC_F5);
+      //unregister_code(KC_LCTL);
+      //unregister_code(KC_F5);
     }
     SEQ_TWO_KEYS(KC_V, KC_V) {
       // Linux paste. CTRL + SHIFT + V
@@ -183,9 +220,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+
+      case MACRO:
+      if (record->event.pressed) {
+        // when keycode QMKBEST is pressed
+        SEND_STRING("QMK is the best thing ever!");
+      } else {
+        // when keycode QMKBEST is released
+      }
+      break;
+
      }
   return true;
 }
+
+
 
 /* Detect layer change and change light */
 uint32_t layer_state_set_user(uint32_t state) {
