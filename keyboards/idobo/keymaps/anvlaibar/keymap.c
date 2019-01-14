@@ -23,11 +23,14 @@
 // Aliases
 #define ___ KC_TRNS
 #define XXX KC_NO
+#define ALT_TAB LALT(KC_TAB)
+#define TAB MT(ALT_TAB,KC_TAB)
 
 // Layers
 #define _QW 0
 #define _FN 1
 #define _RGB 2
+
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
@@ -37,13 +40,15 @@ enum custom_keycodes {
   RAISE,
   FUNCTION,
   RGB,
-  MACRO
+  MACRO,
+  LOREM
 };
 
 //Tap Dance Declarations
 enum {
   TD_ESC = 0
 };
+
 void esc_finished (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     register_code (KC_LCTL);
@@ -87,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
  [_QW] = LAYOUT_ortho_5x15( \
     TD_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS, NO_BSLS, KC_TILD, KC_BSPC, \
-    KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA, NO_QUOT, KC_LBRC, KC_RBRC, \
+    TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA, NO_QUOT, KC_LBRC, KC_RBRC, \
     NO_PIPE, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE, NO_ASTR, KC_RSPC, KC_ENT, \
     KC_LSPO, NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_MINS, KC_SCOLON, KC_UP, KC_DEL, \
     KC_LCTL, KC_LGUI, HYPR_T(KC_H), KC_PSLS, KC_LALT, LOWER, KC_SPC, XXX, RAISE, KC_RALT, MO(1), KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT \
@@ -99,19 +104,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | LEADR | PLAYPS| STOP  | PREV  | NEXT  | VLMMUT| VLM-  | VLM+  | -     | PRTSCR| SCRLK | PAUSE | INS   | -     | CALC  |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | KEYLK | -     | -     | -     | -     | -     | MOD   | -     | -     | -     | -     | -     |  -    | -     | -     |
+	* | KEYLK | -     | -     | -     | -     | -     | MOD   | LOREM | -     | -     | -     | -     |  -    | -     | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | PGUP  | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | RESET | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | RGB   | FN    | -     | HOME  | PG DN | END   |
 	* '-----------------------------------------------------------------------------------------------------------------------'
 	*/
- 	[_FN] = LAYOUT_ortho_5x15(
-  	___, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_F13, XXX, \
+ 	[_FN] = LAYOUT_ortho_5x15( \
+  	___, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_F13, ___, \
   	KC_LEAD, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
-  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, MACRO, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
-  	XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, XXX, \
-  	RESET, XXX, XXX, XXX, QUERTY, LOWER, XXX, XXX, RAISE, RGB, MO(2), XXX, KC_HOME, KC_PGDN, KC_END \
+  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, MACRO, LOREM, XXX, XXX, XXX, XXX, XXX, ___, \
+  	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, ___, \
+  	RESET, ___, ___, XXX, QUERTY, LOWER, ___, ___, RAISE, RGB, MO(2), XXX, KC_HOME, KC_PGDN, KC_END \
 	),
 
  /* RGB-controls - LAYER 2
@@ -120,20 +125,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | -     |BKLTTGL| BKLT-X| BKLT+ | BKLT- | PULSE | -     | -     | -     | -     | -     | -     |  -    | -     | -     |
+	* | -     |BKLTTGL| BKLT+-| BKLT+ | BKLT- | BKLTMX| PULSE | -     | -     | -     | -     | -     |  -    | -     | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | -     | RGBTGL| RGB-  | RGB+  | HUE-  | HUE+  | SAT-  | SAT+  | RGBMD | RGBRMD| RAINBW| PLAIN | SWIRL | XMAS  | KNIGHT|
+	* | -     | RGBTGL| RGB+  | RGB-  | HUE+  | HUE-  | SAT+  | SAT-  | RGBMD | RGBRMD| RAINBW| PLAIN | SWIRL | XMAS  | KNIGHT|
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | -     | -     | -     |  -    | QUERTY| LOWER | -     | -     | LOWER | -     | -     | -     | RGBTST| GRDINT| SNAKE |
+	* | -     | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | -     | -     | -     | RGBTST| GRDINT| SNAKE |
 	* '-----------------------------------------------------------------------------------------------------------------------'
 	*/
- 	[_RGB] = LAYOUT_ortho_5x15(
+ 	[_RGB] = LAYOUT_ortho_5x15( \
   	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, ___, \
-  	XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
-  	XXX, BL_TOGG, BL_STEP, BL_INC, BL_DEC, BL_BRTG, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
+  	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
+  	___, BL_TOGG, BL_STEP, BL_INC, BL_DEC, BL_ON, BL_BRTG, XXX, XXX, XXX, XXX, XXX, XXX, XXX, ___, \
   	___, RGB_TOG, RGB_VAI, RGB_VAD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_MOD, RGB_RMOD, RGB_M_R, RGB_M_P, RGB_M_SW, RGB_M_X, RGB_M_K, \
-  	___, ___, XXX, XXX, QUERTY, LOWER, ___, ___, LOWER, ___, XXX, XXX, RGB_M_T, RGB_M_G, RGB_M_SN \
-	),
+  	___, ___, XXX, XXX, QUERTY, LOWER, ___, ___, RAISE, ___, XXX, XXX, RGB_M_T, RGB_M_G, RGB_M_SN \
+	)
 };
 
 LEADER_EXTERNS();
@@ -151,12 +156,6 @@ void matrix_scan_user(void) {
       // Export for web in photoshop: LALT + SHIFT + CTRL + W
       SEND_STRING(SS_LALT(SS_LSFT(SS_LCTRL("w"))));
     }
-    SEQ_ONE_KEY(KC_R) {
-      // Open cmd
-      SEND_STRING(SS_LGUI("r"));
-      _delay_ms(500);
-      SEND_STRING("cmd" SS_TAP(X_ENTER));
-    }
     SEQ_TWO_KEYS(KC_5, KC_5) {
       // Hard refresh in browser. CTRL + F5
       SEND_STRING(SS_LCTRL(SS_TAP(X_F5)));
@@ -169,6 +168,12 @@ void matrix_scan_user(void) {
     SEQ_TWO_KEYS(KC_V, KC_V) {
       // Linux paste. CTRL + SHIFT + V
       SEND_STRING(SS_LCTRL(SS_LSFT("v")));
+    }
+    SEQ_THREE_KEYS(KC_C,KC_M,KC_D) {
+      // Open cmd
+      SEND_STRING(SS_LGUI("r"));
+      _delay_ms(500);
+      SEND_STRING("cmd" SS_TAP(X_ENTER));
     }
 
   }
@@ -223,18 +228,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       case MACRO:
       if (record->event.pressed) {
-        // when keycode QMKBEST is pressed
         SEND_STRING("QMK is the best thing ever!");
       } else {
-        // when keycode QMKBEST is released
+
+      }
+      break;
+
+      case LOREM:
+      if (record->event.pressed) {
+        SEND_STRING("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sapien lorem, volutpat ac finibus a, luctus ut sapien. Vestibulum id rutrum purus, vitae fermentum purus. Mauris egestas eleifend erat commodo luctus. Nam blandit tincidunt egestas. Suspendisse sed purus sit amet turpis sagittis vulputate. Fusce elementum venenatis ipsum eget aliquet. Sed dictum tellus ut orci varius pharetra. Etiam nec nunc sed elit tincidunt faucibus. Phasellus pretium nulla eget tempor facilisis.");
+      } else {
+
       }
       break;
 
      }
   return true;
 }
-
-
 
 /* Detect layer change and change light */
 uint32_t layer_state_set_user(uint32_t state) {
