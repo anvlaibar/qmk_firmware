@@ -128,6 +128,11 @@ void matrix_scan_user(void) {
       SEND_STRING(SS_LCTRL(X_F5));
     }
 
+    SEQ_TWO_KEYS(KC_V, KC_V) {
+      // Linux paste. CTRL + SHIFT + V
+      SEND_STRING(SS_LCTRL(SS_LSFT("v")));
+    }
+
   }
 }
 
