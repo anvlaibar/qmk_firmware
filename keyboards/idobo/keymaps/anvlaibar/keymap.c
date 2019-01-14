@@ -35,7 +35,7 @@
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   QMK = SAFE_RANGE,
-  QUERTY,
+  QWERTY,
   LOWER,
   RAISE,
   FUNCTION,
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | PGUP  | -     |
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | RESET | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | RGB   | FN    | -     | HOME  | PG DN | END   |
+	* | RESET | -     | -     |  -    | QWERTY| LOWER | -     | -     | RAISE | RGB   | FN    | -     | HOME  | PG DN | END   |
 	* '-----------------------------------------------------------------------------------------------------------------------'
 	*/
  	[_FN] = LAYOUT_ortho_5x15( \
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   	KC_LEAD, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
   	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, MACRO, LOREM, XXX, XXX, XXX, XXX, XXX, ___, \
   	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, ___, \
-  	RESET, ___, ___, XXX, QUERTY, LOWER, ___, ___, RAISE, RGB, MO(2), XXX, KC_HOME, KC_PGDN, KC_END \
+  	RESET, ___, ___, XXX, QWERTY, LOWER, ___, ___, RAISE, RGB, MO(2), XXX, KC_HOME, KC_PGDN, KC_END \
 	),
 
  /* RGB-controls - LAYER 2
@@ -129,15 +129,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
 	* | -     | RGBTGL| RGB+  | RGB-  | HUE+  | HUE-  | SAT+  | SAT-  | RGBMD | RGBRMD| RAINBW| PLAIN | SWIRL | XMAS  | KNIGHT|
 	* |-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------|
-	* | -     | -     | -     |  -    | QUERTY| LOWER | -     | -     | RAISE | -     | -     | -     | RGBTST| GRDINT| SNAKE |
+	* | -     | -     | -     |  -    | QWERTY| LOWER | -     | -     | RAISE | -     | -     | -     | RGBTST| GRDINT| SNAKE |
 	* '-----------------------------------------------------------------------------------------------------------------------'
 	*/
  	[_RGB] = LAYOUT_ortho_5x15( \
-  	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, ___, \
+  	___, ___, ___, ___, ___, ___, ___, ___, ___, ___, ___, XXX, XXX, XXX, ___, \
   	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, \
   	___, BL_TOGG, BL_STEP, BL_INC, BL_DEC, BL_ON, BL_BRTG, XXX, XXX, XXX, XXX, XXX, XXX, XXX, ___, \
   	___, RGB_TOG, RGB_VAI, RGB_VAD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_MOD, RGB_RMOD, RGB_M_R, RGB_M_P, RGB_M_SW, RGB_M_X, RGB_M_K, \
-  	___, ___, XXX, XXX, QUERTY, LOWER, ___, ___, RAISE, ___, XXX, XXX, RGB_M_T, RGB_M_G, RGB_M_SN \
+  	___, ___, XXX, XXX, QWERTY, LOWER, ___, ___, RAISE, ___, XXX, XXX, RGB_M_T, RGB_M_G, RGB_M_SN \
 	)
 };
 
@@ -234,6 +234,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
 
+
+      // Prints a paragraph of Lorem Ipsum
       case LOREM:
       if (record->event.pressed) {
         SEND_STRING("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sapien lorem, volutpat ac finibus a, luctus ut sapien. Vestibulum id rutrum purus, vitae fermentum purus. Mauris egestas eleifend erat commodo luctus. Nam blandit tincidunt egestas. Suspendisse sed purus sit amet turpis sagittis vulputate. Fusce elementum venenatis ipsum eget aliquet. Sed dictum tellus ut orci varius pharetra. Etiam nec nunc sed elit tincidunt faucibus. Phasellus pretium nulla eget tempor facilisis.");
