@@ -96,14 +96,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA, NO_QUOT, KC_LBRC, KC_RBRC, \
     NO_PIPE, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE, NO_ASTR, KC_RSPC, KC_ENT, \
     KC_LSPO, NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_MINS, KC_SCOLON, KC_UP, KC_DEL, \
-    KC_LCTL, KC_LGUI, KC_HYPR, KC_PSLS, KC_LALT, LOWER, KC_SPC, XXX, RAISE, KC_RALT, MO(_FN), KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT \
+    KC_LCTL, KC_LGUI, KC_HYPR, KC_PSLS, KC_LALT, LOWER, KC_SPC, KC_SPC, RAISE, KC_RALT, MO(_FN), KC_AMPR, KC_LEFT, KC_DOWN, KC_RGHT \
   ),
 
-	 /* Function & Media keys - LAYER 1
+ /* Function & Media keys - LAYER 1
 	* ╭───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────╮
 	* │ -     │ F1    │ F2    │ F3    │ F4    │ F5    │ F6    │ F7    │ F8    │ F9    │ F10   │ F11   │ F12   │ F13   │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-	* │ LEADR │ ⏯    │ ⏹     │ ⏮    │ ⏭    │ 🔈     │ 🔉     │ 🔊    │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
+	* │ LEADR │ ⏯️    │ ⏹     │ ⏮    │ ⏭    │ 🔈     │ 🔉     │ 🔊    │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ KEYLK │ -     │ -     │ -     │ -     │ -     │ -     │ LOREM │ -     │ -     │ -     │ -     │ «     │ »     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
