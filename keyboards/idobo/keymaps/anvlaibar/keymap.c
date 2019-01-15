@@ -34,13 +34,14 @@
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  QMK = SAFE_RANGE,
-  QWERTY,
+  QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
   FUNCTION,
   RGB,
-  LOREM
+  LOREM,
+  M_LDAQ,
+  M_RDAQ
 };
 
 //Tap Dance Declarations
@@ -59,9 +60,9 @@ void esc_finished (qk_tap_dance_state_t *state, void *user_data) {
 }
 void esc_reset (qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
-    register_code (KC_LCTL);
-    register_code (KC_LALT);
-    register_code (KC_ESC);
+    unregister_code (KC_LCTL);
+    unregister_code (KC_LALT);
+    unregister_code (KC_ESC);
   } else {
     unregister_code (KC_ESC);
   }
@@ -103,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ LEADR │ PLAYPS│ STOP  │ PREV  │ NEXT  │ VLMMUT│ VLM-  │ VLM+  │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-	* │ KEYLK │ -     │ -     │ -     │ -     │ -     │ -     │ LOREM │ -     │ -     │ -     │ -     │  -    │ -     │ -     │
+	* │ KEYLK │ -     │ -     │ -     │ -     │ -     │ -     │ LOREM │ -     │ -     │ -     │ -     │ «     │ »     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ PGUP  │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
@@ -113,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  	[_FN] = LAYOUT_ortho_5x15( \
   	___, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_F13, ___, \
   	KC_LEAD, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
-  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, XXX, LOREM, XXX, XXX, XXX, XXX, XXX, ___, \
+  	KC_LOCK, XXX, XXX, XXX, XXX, XXX, XXX, XXX, LOREM, XXX, XXX, XXX, M_LDAQ, M_RDAQ, ___, \
   	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, ___, \
   	RESET, ___, ___, XXX, QWERTY, LOWER, ___, ___, RAISE, RGB, MO(_RGB), XXX, KC_HOME, KC_PGDN, KC_END \
 	),
@@ -124,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-	* │ -     │BKLTTGL│ BKLT+-┤ BKLT+ │ BKLT- │ BKLTMX│ PULSE │ -     │ -     │ -     │ -     │ -     │  -    │ -     │ -     │
+	* │ -     │BKLTTGL│ BKLT+-│ BKLT+ │ BKLT- │ BKLTMX│ PULSE │ -     │ -     │ -     │ -     │ -     │  -    │ -     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ -     │ RGBTGL│ RGB+  │ RGB-  │ HUE+  │ HUE-  │ SAT+  │ SAT-  │ RGBMD │ RGBRMD│ RAINBW│ PLAIN │ SWIRL │ XMAS  │ KNIGHT│
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
@@ -229,6 +230,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+
+      case M_LDAQ:
+        if (record->event.pressed) {
+          SEND_STRING("«");
+        }
+      return false;
+      break;
+
+      case M_RDAQ:
+        if (record->event.pressed) {
+          SEND_STRING("»");
+        }
+      return false;
+      break;
+
+
 
      }
   return true;
