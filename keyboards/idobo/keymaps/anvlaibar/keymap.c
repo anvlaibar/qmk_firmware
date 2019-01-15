@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_norwegian.h"
+#include "action_layer.h"
 #include "quantum.h"
 #include "send_string_keycodes.h"
 #include "eeconfig.h"
@@ -102,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	* ╭───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────╮
 	* │ -     │ F1    │ F2    │ F3    │ F4    │ F5    │ F6    │ F7    │ F8    │ F9    │ F10   │ F11   │ F12   │ F13   │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-	* │ LEADR │ PLAYPS│ STOP  │ PREV  │ NEXT  │ VLMMUT│ VLM-  │ VLM+  │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
+	* │ LEADR │ ⏯     │ ⏹     │ ⏮     │ ⏭     │ 🔈     │ 🔉     │ 🔊     │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ KEYLK │ -     │ -     │ -     │ -     │ -     │ -     │ LOREM │ -     │ -     │ -     │ -     │ «     │ »     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
@@ -267,5 +268,8 @@ uint32_t layer_state_set_user(uint32_t state) {
   return state;
 }
 
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+    return MACRO_NONE;
+};
 
 
