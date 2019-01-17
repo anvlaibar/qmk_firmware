@@ -25,6 +25,8 @@
 #define ___ KC_TRNS
 #define XXX KC_NO
 
+#define GRTR
+
 // Layers
 #define _QW 0
 #define _FN 1
@@ -64,22 +66,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
   * │ SHIFT │ <     │ Z     │ X     │ C     │ V     │ B     │ N     │ M     │ ,     │ .     │ -     │ ;     │ UP    │ DEL   │
   * ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-  * │ CTRL  │ GUI   │ HYPER │ ALT   │ LOWER │ SPACE │ SPACE │ RAISE │ /     │ ALTGR │ FN    │ @     │ LEFT  │ DOWN  │ RIGHT │
+  * │ CTRL  │ GUI   │ HYPER │ ALT   │ LOWER │ SPACE │ SPACE │ RAISE │ /     │ ALTGR │ FN    │ LEADR │ LEFT  │ DOWN  │ RIGHT │
   * ╰───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────╯
   */
   [_QW] = LAYOUT_ortho_5x15( \
     KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, NO_PLUS, NO_BSLS, NO_GRV, KC_BSPC, \
     KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, NO_AA, NO_QUOT, NO_LCBR, NO_RCBR, \
     NO_PIPE, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, NO_OSLH, NO_AE, NO_APOS, KC_RSPC, KC_ENT, \
-    LSFT_T(NO_GRTR), NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, NO_MINS, NO_SCLN, KC_UP, KC_DEL, \
-    KC_LCTL, KC_LGUI, KC_HYPR, KC_LALT, TO(2), KC_SPC, KC_SPC, TO(1), KC_PSLS, KC_RALT, OSL(1), NO_AT, KC_LEFT, KC_DOWN, KC_RGHT \
+    SFT_T(NO_GRTR), NO_LESS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, NO_MINS, NO_SCLN, KC_UP, KC_DEL, \
+    KC_LCTL, KC_LGUI, KC_HYPR, KC_LALT, TO(2), KC_SPC, KC_SPC, TO(1), KC_PSLS, KC_RALT, OSL(1), KC_LEAD, KC_LEFT, KC_DOWN, KC_RGHT \
   ),
 
  /* Function & Media keys - LAYER 1
 	* ╭───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────╮
 	* │ -     │ F1    │ F2    │ F3    │ F4    │ F5    │ F6    │ F7    │ F8    │ F9    │ F10   │ F11   │ F12   │ F13   │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
-	* │ LEADR │ ⏯️    │ ⏹     │ ⏮    │ ⏭    │ 🔈     │ 🔉     │ 🔊    │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
+	* │ -     │ ⏯️    │ ⏹     │ ⏮    │ ⏭    │ 🔈     │ 🔉     │ 🔊    │ -     │ PRTSCR│ SCRLK │ PAUSE │ INS   │ -     │ CALC  │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
 	* │ CAPS  │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ -     │ LOREM │ -     │ -     │ «     │ »     │ -     │
 	* ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤
@@ -90,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	*/
  	[_FN] = LAYOUT_ortho_5x15( \
   	___, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_F13, ___, \
-  	KC_LEAD, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
+  	___, KC_MPLY, KC_MSTP, KC_MPRV, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, XXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_INS, XXX, KC_CALC, \
   	KC_CLCK, ___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, LOREM, XXX, XXX, C_LDBLQUT, C_RDBLQUT, ___, \
   	___, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, XXX, KC_PGUP, ___, \
   	RESET, ___, ___, ___, TO(0), ___, ___, TO(2), XXX, XXX, XXX, XXX, KC_HOME, KC_PGDN, KC_END \
@@ -119,28 +121,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool did_leader_succeed;
-#ifdef AUDIO_ENABLE
-float leader_succeeds[][2] = SONG(ALL_STAR);
-float leader_fails[][2] = SONG(RICK_ROLL);
-float qwerty_s[][2] = SONG(QWERTY_SOUND);
-float fn_s[][2] = SONG(ONE_UP_SOUND);
-float rgb_s[][2] = SONG(ZELDA_TREASURE);
-float reset_s[][2] = SONG(TERMINAL_SOUND);
-#endif
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
  LEADER_DICTIONARY() {
  did_leader_succeed = leading = false;
 
- SEQ_ONE_KEY(KC_E) {
-  SEND_STRING(SS_LCTRL(SS_LSFT("t")));
-  did_leader_succeed = true;
- }
- SEQ_TWO_KEYS(KC_E, KC_D) {
-  SEND_STRING(SS_LGUI("r")"cmd"SS_TAP(X_ENTER)SS_LCTRL("c"));
-  did_leader_succeed = true;
- }
  SEQ_ONE_KEY(KC_T) {
  // Re-open closed tab in browser. CTRL + SHIFT + T
  SEND_STRING(SS_LCTRL(SS_LSFT("t")));
@@ -175,21 +161,11 @@ void matrix_scan_user(void) {
 }
 
 void leader_start(void) {
-#ifdef AUDIO_ENABLE
- PLAY_SONG(fn_s);
-#endif
+
 }
 
 void leader_end(void) {
- if (did_leader_succeed) {
-#ifdef AUDIO_ENABLE
- PLAY_SONG(leader_succeeds);
-#endif
- } else {
-#ifdef AUDIO_ENABLE
- PLAY_SONG(leader_fails);
-#endif
- }
+
 }
 
 void persistant_default_layer_set(uint16_t default_layer) {
@@ -202,29 +178,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   switch (keycode) {
     case _QW:
-        #ifdef AUDIO_ENABLE
-        PLAY_SONG(qwerty_s);
-        #endif
         persistant_default_layer_set(1UL<<_QW);
       return false;
     case _FN:
-        #ifdef AUDIO_ENABLE
-        PLAY_SONG(fn_s);
-        #endif
         persistant_default_layer_set(1UL<<_FN);
       return false;
-
     case _RGB:
-      #ifdef AUDIO_ENABLE
-      PLAY_SONG(rgb_s);
-      #endif
       persistant_default_layer_set(1UL<<_RGB);
-      return false;
-
-    case RESET:
-      #ifdef AUDIO_ENABLE
-      PLAY_SONG(reset_s);
-      #endif
       return false;
 
       case LOWER:
