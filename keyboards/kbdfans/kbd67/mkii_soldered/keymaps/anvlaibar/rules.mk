@@ -1,0 +1,1 @@
+RAW_ENABLE = yes            # Enable RAW HID communication to PC

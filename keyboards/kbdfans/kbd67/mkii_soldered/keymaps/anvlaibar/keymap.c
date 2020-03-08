@@ -16,12 +16,18 @@
 #include QMK_KEYBOARD_H
 #include "keymap_norwegian.h"
 
+// Add headers for raw hid communication
+//#include <split_scomm.h>
+#include "raw_hid.h"
+
 /* 	K000, K001, K002, K003, K004, K005, K006, K007, K008, K009, K010, K011, K012, K013, K212, K014, \
  *	K100, K101, K102, K103, K104, K105, K106, K107, K108, K109, K110, K111, K112, K113,       K114, \
  *	K200, K201, K202, K203, K204, K205, K206, K207, K208, K209, K210, K211,       K213,       K214, \
  *	K300, K404, K301, K302, K303, K304, K305, K306, K307, K308, K309, K310, K311,       K313, K314, \
  *	K400, K401, K402,       K403,       K405,       K407,       K409, K410,       K411, K413, K414  \
  */
+
+extern uint8_t is_master;
 
 // Aliases
 #define ___ KC_TRNS
@@ -55,7 +61,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+// Raw hid variables
+uint8_t layer_index = 0
+
 // TODO: Implement layer change code
 // https://docs.qmk.fm/#/custom_quantum_functions?id=layer-change-code
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case 0:
+       // rgblight_setrgb (0x00,  0x00, 0xFF);
+        break;
+    case 1:
+        //rgblight_setrgb (0xFF,  0x00, 0x00);
+        break;
+    default: //  for any other layers, or the default layer
+        //rgblight_setrgb (0x00,  0xFF, 0xFF);
+        break;
+    }
+  return state;
+}
 
-// TODO: Implemehnt Raw HID, to be able to send layer state to host
+
+
+
+// TODO: Implement Raw HID, to be able to send layer state to host
+void raw_hid_send_layer_index(void) {
+  // Send the current info screen index to the connected node script so that it can pass back the new data
+  uint8_t send_data[32] = {0};
+  send_data[0] = layer_index + 1; // Add one so that we can distinguish it from a null byte
+  raw_hid_send(send_data, sizeof(send_data));
+}
